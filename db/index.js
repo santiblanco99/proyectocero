@@ -3,7 +3,7 @@ const Pool = require('pg').Pool
 const pool = new Pool();
 
 const getUsers = (req,res) => {
-  pool.query('SELECT * FROM users ORDER BY id ASC',(err,results) => {
+  pool.query('SELECT * FROM users',(err,results) => {
     if(err){
       console.log(err);
     }
