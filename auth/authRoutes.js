@@ -1,4 +1,6 @@
 const userDB = require('../db/userDB');
+const verifyToken = require('./verifyToken');
+
 
 var express = require('express');
 var router = express.Router();
@@ -26,17 +28,19 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.get('/me', (req, res) => {
-    var token = req.headers['x-access-token'];
-    if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+router.get('/me', verifyToken, (req, res) => {
 
-    jwt.verify(token, process.env['secret'], async (err, decoded) => {
-        if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+    try {
 
         var user = await userDB.getUserById(decoded.id);
         console.log(user);
         res.status(200).json(user);
-    });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("There was a problem finding the user.");
+    }
+
 });
 
 router.post('/login', async (req, res) => {
