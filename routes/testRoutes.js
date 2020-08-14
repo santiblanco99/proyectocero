@@ -5,19 +5,20 @@ var router = express.Router();
 
 
 const primeraFuncion = (req,res,next) => {
-    res.send('firt');
+    // res.send('firt');
+    res.header('primera','sdgdgdgd');
     next();
 }
 
 const someFunction = (req,res,next) =>{
     res.header('ddddd','fdfdfdf');
-    res.send('hey');
+    // res.send('hey');
     next();
 };
 
 
 
-router.get('/',primeraFuncion,(req,res) =>{
+router.get('/',primeraFuncion,someFunction,(req,res) =>{
     res.send('El final');
 });
 
