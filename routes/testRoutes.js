@@ -8,7 +8,7 @@ const Pool = require('pg').Pool
 
 const pool = new Pool();
 
-const getEvents = async (req,res,next,nombre) => {
+const getEvents = async (req,res,next) => {
 
     try {
         console.log('llegueeeeee');
