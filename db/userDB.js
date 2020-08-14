@@ -16,7 +16,6 @@ const getUserById = async (id) => {
 const getUserByUsername = async (id) => {
     try {
         var res = await pool.query('SELECT * FROM USERS WHERE username = $1', [id]);
-        console.log(res.rows[0]);
         return res.rows[0];
     } catch (error) {
         console.log(error);

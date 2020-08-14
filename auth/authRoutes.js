@@ -28,7 +28,7 @@ router.post('/create-user', async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        res.status(500).send('Could not create new user');
+        return res.status(500).send('Could not create new user');
 
     }
 });
@@ -38,7 +38,7 @@ router.post('/create-user', async (req, res) => {
 router.post('/api-auth', async (req,res) =>{
     try {
         var user = await userDB.getUserByUsername(req.body.username);
-        console.log(user);
+
         if(!user){
             return res.status(500).send("There was a problem finding the user.");
         }
@@ -60,7 +60,6 @@ router.post('/api-auth', async (req,res) =>{
 router.post('/login', async (req, res) => {
     try {
         var user = await userDB.getUserById(req.body.email);
-        console.log(user);
         if(!user){
             return res.status(500).send('User not found');
         }

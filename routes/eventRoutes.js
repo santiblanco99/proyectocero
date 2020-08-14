@@ -7,7 +7,7 @@ var router = express.Router();
 router.get('/events', verifyToken, async (req, res) => {
     try {
         var loggedUser = await userDB.getUserById(req.userId);
-        console.log(loggedUser);
+        
         var events = await eventsDB.getUserEvents(loggedUser.email);
         if (!events) {
             res.status(500).send('Error fetching events');
@@ -36,7 +36,6 @@ router.get('/events/:id', verifyToken, async (req, res) => {
 router.post('/events', verifyToken, async (req, res) => {
     try {
         const loggedUser = await userDB.getUserById(req.userId);
-        console.log(loggedUser);
         const { event_name, event_category, event_place, event_address,
             event_initial_date, event_final_date, event_type } = req.body;
 
@@ -52,9 +51,12 @@ router.post('/events', verifyToken, async (req, res) => {
     }
 });
 
-router.put('/events/:id', async (req,res) => {
+router.put('/events/:id', verifyToken, async (req,res) => {
     try {
         var updatedEvent = await eventsDB.updateEventById(req);
+        if(!updatedEvent){
+            return res.status(500).send('Error updating');
+        }
         return res.status(200).json(updatedEvent);
     } catch (error) {
         console.log(error);
@@ -62,7 +64,7 @@ router.put('/events/:id', async (req,res) => {
 });
 
 
-router.delete('/events/:id', async (req,res) => {
+router.delete('/events/:id',verifyToken, async (req,res) => {
     try {
         var id = parseInt(req.params.id);
         var deletedEvent = await eventsDB.deleteEvent(id);
@@ -72,6 +74,7 @@ router.delete('/events/:id', async (req,res) => {
         return res.status(200).json(deletedEvent);
     } catch (error) {
         console.log(error);
+        return res.status(500).send('Error deleting event');
     }
 });
 
