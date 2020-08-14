@@ -17,6 +17,7 @@ router.post('/create-user', async (req, res) => {
         // console.log(req.body);
         var hashedPassword = bcrypt.hashSync(password);
         var newUser = await userDB.createUser(first_name, last_name, email, hashedPassword,username);
+        console.log(newUser);
         var token = jwt.sign({ id: email }, process.env['secret'], {
             expiresIn: 86400,
         });
