@@ -28,7 +28,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.get('/me', verifyToken, (req, res) => {
+router.get('/me', verifyToken, async (req, res) => {
 
     try {
 
