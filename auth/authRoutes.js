@@ -19,6 +19,7 @@ router.post('/create-user', async (req, res) => {
         var newUser = await userDB.createUser(first_name, last_name, email, hashedPassword,username);
         if(!newUser){
             res.status(500).send('Could not create new user');
+            return;
         }
         var token = jwt.sign({ id: email }, process.env['secret'], {
             expiresIn: 86400,
