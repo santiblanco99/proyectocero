@@ -4,7 +4,7 @@ var router = express.Router();
 
 router.get('/',db.getUsers);
 
-router.get('/:id',db.getUserById);
+// router.get('/:id',db.getUserById);
 
 router.post('/users',db.createUser);
 
