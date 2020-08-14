@@ -11,7 +11,7 @@ var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 
 router.post('/register', (req, res) => {
-    const { name, email, lastname, password } = request.body
+    const { name, email, lastname, password } = req.body
     console.log(request.body);
     var hashedPassword = bcrypt.hashSync(password);
 
