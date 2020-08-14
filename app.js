@@ -14,6 +14,10 @@ app.use(bodyParser.urlencoded({
 const userRoutes = require('./routes/userRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 
+const authRoutes = require('./auth/authRoutes');
+
+app.use('/auth',authRoutes);
+
 
 app.use('/',userRoutes);
 
