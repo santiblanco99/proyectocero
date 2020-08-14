@@ -5,7 +5,7 @@ const pool = new Pool();
 const getUserById = async (id) => {
     try {
         var res = await pool.query('SELECT * FROM USERS WHERE email = $1', [id]);
-        console.log(res.rows[0]);
+        
         return res.rows[0];
     } catch (error) {
         console.log(error);

@@ -14,13 +14,14 @@ const getUserEvents = async (email) => {
 
 };
 
-const createEvent = async(name,category,place,address,start,end,type,user) => {
+const createEvent = async(name,category,place,address,start,end,type,user,res) => {
     try {
         var newEvent = await pool.query('INSERT INTO events (name,category,place,address,startdate,enddate,type,user_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *',
         [name,category,place,address,start,end,type,user]);
-        return newEvent.rows[0];
+        return res.status(200).json(newEvent.rows[0]);
     } catch (error) {
         console.log(error);
+        return res.status(500).send('Errrrrrr');
     }
 }
 

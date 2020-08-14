@@ -37,8 +37,8 @@ router.post('/events', verifyToken, async (req, res) => {
             event_initial_date, event_final_date, event_type } = req.body;
 
         var newEvent = await eventsDB.createEvent(event_name, event_category, event_place, event_address, event_initial_date, event_final_date,
-            event_type, loggedUser.email);
-            return res.status(200).json(newEvent);
+            event_type, loggedUser.email,res);
+            return newEvent;
     } catch (error) {
         console.log('error en res');
     }
