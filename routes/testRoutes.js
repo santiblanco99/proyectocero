@@ -17,7 +17,7 @@ const someFunction = (req,res,next) =>{
 
 
 
-router.get('/',primeraFuncion,someFunction,(req,res) =>{
+router.get('/',primeraFuncion,(req,res) =>{
     res.send('El final');
 });
 
