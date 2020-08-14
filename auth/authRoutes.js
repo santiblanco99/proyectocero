@@ -32,7 +32,7 @@ router.get('/me', verifyToken, async (req, res) => {
 
     try {
 
-        var user = await userDB.getUserById(decoded.id);
+        var user = await userDB.getUserById(req.userId);
         console.log(user);
         res.status(200).json(user);
 
