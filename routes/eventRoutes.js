@@ -62,4 +62,18 @@ router.put('/events/:id', async (req,res) => {
 });
 
 
+router.delete('/events/:id', async (req,res) => {
+    try {
+        var id = parseInt(req.params.id);
+        var deletedEvent = await eventsDB.deleteEvent(id);
+        if(!deletedEvent){
+            return res.status(500).send('Error deleting event');
+        }
+        return res.status(200).json(deletedEvent);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+
 module.exports = router;

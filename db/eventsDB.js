@@ -47,6 +47,15 @@ const updateEventById = async(req) => {
         console.log(err);
         
     }
+};
+
+const deleteEvent = async(id) => {
+    try {
+        var deletedEvent = pool.query('DELETE FROM events WHERE id = $1 RETURNING *',[id]);
+        return deleteEvent.rows[0];
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 
@@ -54,5 +63,6 @@ module.exports = {
     getUserEvents,
     getEventById,
     createEvent,
-    updateEventById
+    updateEventById,
+    deleteEvent
 };
