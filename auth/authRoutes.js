@@ -12,7 +12,7 @@ var bcrypt = require('bcryptjs');
 
 router.post('/register', (req, res) => {
     const { name, email, lastname, password } = req.body
-    console.log(request.body);
+    console.log(req.body);
     var hashedPassword = bcrypt.hashSync(password);
 
     pool.query('INSERT INTO users (name, lastname, email, password) VALUES ($1, $2, $3, $4)', [name, lastname, email, hashedPassword], (error, result) => {
