@@ -10,15 +10,17 @@ const primeraFuncion = (req,res,next) => {
     next();
 }
 
-const someFunction = (req,res,next) =>{
+const someFunction = async (req,res,next) =>{
 
     try {
         res.header('primera','fdfdfdf');
         // res.send('hey');
-        userDB.createUser('sdsds');
+        var user = await userDB.createUser('sdsds');
         next();
     } catch (error) {
         console.log(error);
+        console.log('error acaaaa')
+        res.send('pffff');
     }
   
 };
