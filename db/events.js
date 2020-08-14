@@ -3,9 +3,9 @@ const Pool = require('pg').Pool
 const pool = new Pool();
 
 
-//USER TABLE LOGIC
-const getUsers = (req,res) => {
-  pool.query('SELECT * FROM users',(err,results) => {
+
+const getEvents = (req,res) => {
+  pool.query('SELECT * FROM events ORDER BY created_at DSC',(err,results) => {
     if(err){
       console.log(err);
     }
@@ -13,7 +13,7 @@ const getUsers = (req,res) => {
   });
 };
 
-const getUserById = (request, response) => {
+const getEventById = (request, response) => {
   const id = parseInt(request.params.id);
 
   pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
@@ -40,7 +40,5 @@ const createUser = (request, response) => {
 
 
 module.exports = {
-  getUsers, 
-  getUserById,
-  createUser
-}
+    getEvents
+};

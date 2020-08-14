@@ -10,12 +10,14 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-const db = require('./db/users');
 
 const userRoutes = require('./routes/userRoutes');
+const eventRoutes = require('./routes/eventRoutes');
 
 
 app.use('/',userRoutes);
+
+app.use('/events',eventRoutes);
 
 
 
