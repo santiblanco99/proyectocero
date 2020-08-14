@@ -30,11 +30,11 @@ router.post('/register', (req, res) => {
 
 });
 
-router.get('/me', async (req, res) => {
+router.get('/me',  (req, res) => {
     var token = req.headers['x-access-token'];
     if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
 
-    jwt.verify(token, process.env['secret'], function (err, decoded) {
+    jwt.verify(token, process.env['secret'], async (err, decoded) => {
         if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
 
         var user = await userDB.getUserById(decoded.id);
