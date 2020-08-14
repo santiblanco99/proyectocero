@@ -11,6 +11,7 @@ const pool = new Pool();
 const getEvents = async (email,something,req,res,next) => {
 
     try {
+        console.log('llegueeeeee');
         var events = await pool.query('SELECT * FROM events');
         console.log(events);
          req.events = events.rows;
