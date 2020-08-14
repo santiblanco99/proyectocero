@@ -30,7 +30,6 @@ const getEventById = async(id) => {
         return event.rows[0];
     } catch (error) {
         console.log(error);
-        return null;
         
     }
 };
