@@ -18,7 +18,8 @@ router.post('/create-user', async (req, res) => {
         var hashedPassword = bcrypt.hashSync(password);
         var newUser = await userDB.createUser(first_name, last_name, email, hashedPassword,username);
         var token = jwt.sign({ id: email }, process.env['secret'], {
-            expiresIn: 86400
+            expiresIn: 86400,
+            header: 'authorization'
         });
         res.header('Authorization',token);
         res.status(200).json(newUser);
@@ -53,7 +54,8 @@ router.post('/api-auth', async (req,res) =>{
         if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
 
         var token = jwt.sign({ id: user.email }, process.env['secret'], {
-            expiresIn: 86400 // expires in 24 hours
+            expiresIn: 86400,
+            header: 'authorization' // expires in 24 hours
         });
 
         res.status(200).send({ token: token });
