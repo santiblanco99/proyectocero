@@ -72,6 +72,10 @@ router.post('/login', async (req, res) => {
     try {
         var user = await userDB.getUserById(req.body.email);
         console.log(user);
+        if(!user){
+            res.status(500).send('User not found');
+            return;
+        }
         var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
 
         if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
