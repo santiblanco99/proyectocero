@@ -56,6 +56,5 @@ const createEvent = (request, response) => {
 
 module.exports = {
   getUsers, 
-  getUserById,
   createUser
 }
