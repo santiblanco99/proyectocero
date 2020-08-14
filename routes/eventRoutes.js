@@ -35,7 +35,6 @@ router.post('/events', verifyToken, async (req, res) => {
 
         await eventsDB.createEvent(event_name, event_category, event_place, event_address, event_initial_date, event_final_date,
             event_type, loggedUser.email);
-        res.redirect('/events');
     } catch (error) {
 
     }
