@@ -35,9 +35,25 @@ const getEventById = async(id) => {
     }
 };
 
+const updateEventById = async(req) => {
+    try {
+        var id = parseInt(req.params.id);
+        const { event_name, event_category, event_place, event_address,
+            event_initial_date, event_final_date, event_type } = req.body;
+            updatedEvent = await pool.query('UPDATE events SET name = $1, category = $2, place = $3, address = $4, startdate = $5, enddate = $6, type = $7 WHERE id = $8 RETURNING *',
+            [event_name,event_category,event_place, event_address, event_initial_date, event_final_date, event_type, id ]);
+
+            return updatedEvent.rows[0];
+    } catch (error) {
+        console.log(err);
+        
+    }
+}
+
 
 module.exports = {
     getUserEvents,
     getEventById,
-    createEvent
+    createEvent,
+    updateEventById
 };

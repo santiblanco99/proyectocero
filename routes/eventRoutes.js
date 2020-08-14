@@ -51,5 +51,14 @@ router.post('/events', verifyToken, async (req, res) => {
     }
 });
 
+router.put('/events/:id', async (req,res) => {
+    try {
+        var updatedEvent = await eventsDB.updateEventById(req);
+        return res.status(200).json(updatedEvent);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 
 module.exports = router;
