@@ -9,12 +9,12 @@ router.get('/events', verifyToken, async (req, res) => {
         var loggedUser = await userDB.getUserById(req.userId);
         console.log(loggedUser);
         var events = await eventsDB.getUserEvents(loggedUser.email);
-        if(!events){
+        if (!events) {
             res.status(500).send('Error fetching events');
         }
-        res.json(events);
+        res.status(200).json(events);
     } catch (error) {
-
+        res.status(500).send('Error fetching events');
     }
 });
 
@@ -22,10 +22,13 @@ router.get('/events/:id', verifyToken, async (req, res) => {
     var id = req.params.id;
     try {
         var event = await eventsDB.getEventById(id);
+        if (!event) {
+            return res.status(500).send('Couldnt fetch event');
+        }
         return res.status(200).json(event);
     } catch (error) {
         console.log(error);
-        res.status(500).send('Couldnt fetch event');
+        return res.status(500).send('Couldnt fetch event');
     }
 });
 
@@ -37,12 +40,14 @@ router.post('/events', verifyToken, async (req, res) => {
             event_initial_date, event_final_date, event_type } = req.body;
 
         var newEvent = await eventsDB.createEvent(event_name, event_category, event_place, event_address, event_initial_date, event_final_date,
-            event_type, loggedUser.email,res);
-            console.log(newEvent);
-            return res.status(200).json(newEvent);
+            event_type, loggedUser.email, res);
+        if (!newEvent) {
+            return res.status(500).send('Error creating event');
+        }
+        return res.status(200).json(newEvent);
     } catch (error) {
         console.log('error en res');
-        return res.status(500).send('Error ebent');
+        return res.status(500).send('Error event');
     }
 });
 

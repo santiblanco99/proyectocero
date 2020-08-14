@@ -33,25 +33,15 @@ router.post('/create-user', async (req, res) => {
     }
 });
 
-router.get('/me', verifyToken, async (req, res) => {
 
-    try {
-
-        var user = await userDB.getUserById(req.userId);
-        console.log(user);
-        res.status(200).json(user);
-
-    } catch (error) {
-        console.log(error);
-        res.status(500).send("There was a problem finding the user.");
-    }
-
-});
 
 router.post('/api-auth', async (req,res) =>{
     try {
         var user = await userDB.getUserByUsername(req.body.username);
         console.log(user);
+        if(!user){
+            return res.status(500).send("There was a problem finding the user.");
+        }
         var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
 
         if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
@@ -64,6 +54,7 @@ router.post('/api-auth', async (req,res) =>{
         return res.status(200).send({ token: token });
     } catch (error) {
         console.log(error);
+        return res.status(500).send("There was a problem finding the token.");
     }
 });
 
