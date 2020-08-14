@@ -14,7 +14,7 @@ var bcrypt = require('bcryptjs');
 router.post('/create-user', async (req, res) => {
     try {
         const { first_name, email, last_name, password, username } = req.body
-        console.log(req.body);
+        // console.log(req.body);
         var hashedPassword = bcrypt.hashSync(password);
         var newUser = await userDB.createUser(first_name, last_name, email, hashedPassword,username);
         var token = jwt.sign({ id: email }, process.env['secret'], {
@@ -25,6 +25,7 @@ router.post('/create-user', async (req, res) => {
 
     } catch (error) {
         console.log(error);
+        res.status(500).send('Could not create new user');
 
     }
 });
