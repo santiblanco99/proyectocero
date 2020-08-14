@@ -23,8 +23,20 @@ const createEvent = async(name,category,place,address,start,end,type,user) => {
     }
 }
 
+const getEventById = async(id) => {
+    try {
+        var event = await pool.query('SELECT * FROM events WHERE id = $1',[id]);
+        return event.rows[0];
+    } catch (error) {
+        console.log(error);
+        return null;
+        
+    }
+};
+
 
 module.exports = {
     getUserEvents,
+    getEventById,
     createEvent
 };

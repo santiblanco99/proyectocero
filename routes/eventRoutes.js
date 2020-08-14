@@ -15,6 +15,17 @@ router.get('/events',verifyToken, async(req,res) => {
     }
 });
 
+router.get('/events/:id',verifyToken, async (req,res) => {
+    var id = req.params.id;
+    try {
+        var event = await eventsDB.getEventById(id);
+        res.status(200).json(event);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Couldnt fetch event');
+    }
+});
+
 
 router.post('/events',verifyToken,async(req,res)=> {
     try {
