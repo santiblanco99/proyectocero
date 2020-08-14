@@ -19,9 +19,8 @@ router.post('/create-user', async (req, res) => {
         var newUser = await userDB.createUser(first_name, last_name, email, hashedPassword,username);
         var token = jwt.sign({ id: email }, process.env['secret'], {
             expiresIn: 86400,
-            header: 'authorization'
         });
-        res.header('Authorization',token);
+        res.header('authorization',token);
         res.status(200).json(newUser);
 
     } catch (error) {
@@ -75,7 +74,7 @@ router.post('/login', async (req, res) => {
         var token = jwt.sign({ id: user.email }, process.env['secret'], {
             expiresIn: 86400 // expires in 24 hours
         });
-        res.header('Authorization',token);
+        res.header('authorization',token);
         res.status(200).send({ auth: true, token: token });
     } catch (error) {
         console.log(error);
