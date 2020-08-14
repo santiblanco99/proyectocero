@@ -1,6 +1,8 @@
 const Pool = require('pg').Pool
 const pool = new Pool();
 
+const userDB = require('../db/userDB');
+
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
@@ -35,7 +37,8 @@ router.get('/me', function (req, res) {
     jwt.verify(token, process.env['secret'], function (err, decoded) {
         if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
 
-        res.status(200).send(decoded);
+        var user = userDB.getUserById(decoded.id);
+        res.status(200).send(user);
     });
 });
 
