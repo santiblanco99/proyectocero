@@ -18,14 +18,13 @@ router.post('/create-user', async (req, res) => {
         var hashedPassword = bcrypt.hashSync(password);
         var newUser = await userDB.createUser(first_name, last_name, email, hashedPassword,username);
         if(!newUser){
-            res.status(500).send('Could not create new user');
-            return;
+            return res.status(500).send('Could not create new user');
         }
         var token = jwt.sign({ id: email }, process.env['secret'], {
             expiresIn: 86400,
         });
         res.header('authorization',token);
-        res.status(200).json(newUser);
+        return res.status(200).json(newUser);
 
     } catch (error) {
         console.log(error);
@@ -62,7 +61,7 @@ router.post('/api-auth', async (req,res) =>{
             header: 'authorization' // expires in 24 hours
         });
 
-        res.status(200).send({ token: token });
+        return res.status(200).send({ token: token });
     } catch (error) {
         console.log(error);
     }
@@ -73,8 +72,7 @@ router.post('/login', async (req, res) => {
         var user = await userDB.getUserById(req.body.email);
         console.log(user);
         if(!user){
-            res.status(500).send('User not found');
-            return;
+            return res.status(500).send('User not found');
         }
         var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
 
@@ -84,7 +82,7 @@ router.post('/login', async (req, res) => {
             expiresIn: 86400 // expires in 24 hours
         });
         res.header('authorization',token);
-        res.status(200).send({ auth: true, token: token });
+        return res.status(200).send({ auth: true, token: token });
     } catch (error) {
         console.log(error);
     }

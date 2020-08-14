@@ -21,6 +21,7 @@ const createEvent = async(name,category,place,address,start,end,type,user) => {
         return newEvent.rows[0];
     } catch (error) {
         console.error(error);
+        return error;
     }
 }
 
