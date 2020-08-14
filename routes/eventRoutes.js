@@ -22,11 +22,7 @@ router.get('/events/:id', verifyToken, async (req, res) => {
     var id = req.params.id;
     try {
         var event = await eventsDB.getEventById(id);
-        if(!event){
-            res.status(500).send('No event found');
-            return;
-        }
-        res.status(200).json(event);
+        return res.status(200).json(event);
     } catch (error) {
         console.log(error);
         res.status(500).send('Couldnt fetch event');
