@@ -20,7 +20,6 @@ router.post('/register', (req, res) => {
             throw error
         }
         console.log(result);
-        response.status(201).send(`User added`)
         var token = jwt.sign({ id: email }, process.env['secret'], {
             expiresIn: 86400
         });
