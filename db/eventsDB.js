@@ -52,7 +52,7 @@ const updateEventById = async(req) => {
 const deleteEvent = async(id) => {
     try {
         var deletedEvent = pool.query('DELETE FROM events WHERE id = $1 RETURNING *',[id]);
-        return deleteEvent.rows[0];
+        return deletedEvent.rows[0];
     } catch (error) {
         console.log(error);
     }
