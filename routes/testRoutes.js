@@ -11,7 +11,7 @@ const primeraFuncion = (req,res,next) => {
 }
 
 const someFunction = (req,res,next) =>{
-    res.header('ddddd','fdfdfdf');
+    res.header('primera','fdfdfdf');
     // res.send('hey');
     next();
 };
