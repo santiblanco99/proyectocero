@@ -46,7 +46,7 @@ router.post('/login', async (req, res) => {
 
         if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
 
-        var token = jwt.sign({ id: user._id }, config.secret, {
+        var token = jwt.sign({ id: user._id }, process.env['secret'], {
             expiresIn: 86400 // expires in 24 hours
         });
 
