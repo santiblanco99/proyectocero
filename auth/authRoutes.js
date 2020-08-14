@@ -38,7 +38,7 @@ router.get('/me', function (req, res) {
         if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
 
         var user = userDB.getUserById(decoded.id);
-        res.status(200).send(user);
+        res.status(200).json(user);
     });
 });
 
