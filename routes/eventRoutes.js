@@ -36,12 +36,12 @@ router.get('/events/:id', verifyToken, async (req, res) => {
 router.post('/events', verifyToken, async (req, res) => {
     try {
         const loggedUser = await userDB.getUserById(req.userId);
-        console.log(req.userId);
+        console.log(loggedUser);
         const { event_name, event_category, event_place, event_address,
             event_initial_date, event_final_date, event_type } = req.body;
 
         var newEvent = await eventsDB.createEvent(event_name, event_category, event_place, event_address, event_initial_date, event_final_date,
-            event_type, loggedUser.email, res);
+            event_type, loggedUser.email);
         if (!newEvent) {
             return res.status(500).send('Error creating event');
         }
