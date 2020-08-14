@@ -11,16 +11,17 @@ router.use(bodyParser.json());
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 
-router.post('/register', async (req, res) => {
+router.post('/create-user', async (req, res) => {
     try {
-        const { name, email, lastname, password } = req.body
+        const { first_name, email, last_name, password, username } = req.body
         console.log(req.body);
         var hashedPassword = bcrypt.hashSync(password);
-        await userDB.createUser(name, lastname, email, hashedPassword);
+        var newUser = await userDB.createUser(first_name, last_name, email, hashedPassword,username);
         var token = jwt.sign({ id: email }, process.env['secret'], {
             expiresIn: 86400
         });
-        res.status(200).send({ auth: true, token: token });
+        res.header('Authorization',token);
+        res.status(200).json(newUser);
 
     } catch (error) {
         console.log(error);
@@ -43,17 +44,36 @@ router.get('/me', verifyToken, async (req, res) => {
 
 });
 
-router.post('/login', async (req, res) => {
+router.post('/api-auth', async (req,res) =>{
     try {
-        var user = await userDB.getUserById(req.body.email);
+        var user = await userDB.getUserById(req.body.username);
+        console.log(user);
         var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
 
         if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
 
-        var token = jwt.sign({ id: user._id }, process.env['secret'], {
+        var token = jwt.sign({ id: user.email }, process.env['secret'], {
             expiresIn: 86400 // expires in 24 hours
         });
 
+        res.status(200).send({ token: token });
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+router.post('/login', async (req, res) => {
+    try {
+        var user = await userDB.getUserById(req.body.email);
+        console.log(user);
+        var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+
+        if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
+
+        var token = jwt.sign({ id: user.email }, process.env['secret'], {
+            expiresIn: 86400 // expires in 24 hours
+        });
+        res.header('Authorization',token);
         res.status(200).send({ auth: true, token: token });
     } catch (error) {
         console.log(error);
