@@ -46,7 +46,7 @@ router.get('/me', verifyToken, async (req, res) => {
 
 router.post('/api-auth', async (req,res) =>{
     try {
-        var user = await userDB.getUserById(req.body.username);
+        var user = await userDB.getUserByUsername(req.body.username);
         console.log(user);
         var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
 
