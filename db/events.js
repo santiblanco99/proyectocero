@@ -5,7 +5,7 @@ const pool = new Pool();
 
 
 const getEvents = (req,res) => {
-  pool.query('SELECT * FROM events ORDER BY created_at DSC',(err,results) => {
+  pool.query('SELECT * FROM events ORDER BY created_at',(err,results) => {
     if(err){
       console.log(err);
     }
