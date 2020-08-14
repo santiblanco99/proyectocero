@@ -51,7 +51,7 @@ const updateEventById = async(req) => {
 
 const deleteEvent = async(id) => {
     try {
-        var deletedEvent = pool.query('DELETE FROM events WHERE id = $1 RETURNING *',[id]);
+        var deletedEvent = await pool.query('DELETE FROM events WHERE id = $1 RETURNING *',[id]);
         console.log(deletedEvent);
         return deletedEvent.rows[0];
     } catch (error) {
