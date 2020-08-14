@@ -8,16 +8,17 @@ const Pool = require('pg').Pool
 
 const pool = new Pool();
 
-const getEvents = async (req,res,next) => {
+const getEvents = async (req,res,next,nombre) => {
 
     try {
         console.log('llegueeeeee');
-        var events = await pool.query('SELECT * FROM events');
+        var events = await pool.query('SELECT * FROM eee');
         console.log(events);
          req.events = events.rows;
          next();
     } catch (error) {
         console.log(error);
+        res.status(500).send('error en query');
     }
 
 };
