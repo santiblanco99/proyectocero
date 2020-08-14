@@ -47,8 +47,7 @@ router.post('/api-auth', async (req,res) =>{
         if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
 
         var token = jwt.sign({ id: user.email }, process.env['secret'], {
-            expiresIn: 86400,
-            header: 'authorization' // expires in 24 hours
+            expiresIn: 86400, // expires in 24 hours
         });
 
         return res.status(200).send({ token: token });
