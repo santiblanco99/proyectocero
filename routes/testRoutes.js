@@ -1,7 +1,7 @@
 var express = require('express');
 var verifyToken = require('../auth/verifyToken');
 var router = express.Router();
-
+var userDB = require('../db/userDB');
 
 
 const primeraFuncion = (req,res,next) => {
@@ -11,9 +11,16 @@ const primeraFuncion = (req,res,next) => {
 }
 
 const someFunction = (req,res,next) =>{
-    res.header('primera','fdfdfdf');
-    // res.send('hey');
-    next();
+
+    try {
+        res.header('primera','fdfdfdf');
+        // res.send('hey');
+        userDB.createUser('sdsds');
+        next();
+    } catch (error) {
+        console.log(error);
+    }
+  
 };
 
 
