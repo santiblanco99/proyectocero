@@ -8,32 +8,36 @@ const Pool = require('pg').Pool
 
 const pool = new Pool();
 
-const getEvents = async (req,res,next) => {
 
-    try {
-        console.log('llegueeeeee');
-        var events = await pool.query('SELECT * FROM eee');
-        console.log(events);
-         req.events = events.rows;
-         next();
-    } catch (error) {
-        console.log(error);
-        res.status(500).send('error en query');
+
+const getEvents = (params) => {
+
+    return getEvents = async (req, res, next) => {
+
+        try {
+            console.log('llegueeeeee');
+            var events = await pool.query('SELECT * FROM eee');
+            console.log(events);
+            req.events = events.rows;
+            next();
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('error en query');
+        }
     }
-
 };
 
 
-const primeraFuncion = (req,res,next) => {
+const primeraFuncion = (req, res, next) => {
     // res.send('firt');
-    res.header('primera','sdgdgdgd');
+    res.header('primera', 'sdgdgdgd');
     next();
 }
 
-const someFunction = async (req,res,next) =>{
+const someFunction = async (req, res, next) => {
 
     try {
-        res.header('primera','fdfdfdf');
+        res.header('primera', 'fdfdfdf');
         // res.send('hey');
         var user = await userDB.createUser('sdsds');
         next();
@@ -42,12 +46,12 @@ const someFunction = async (req,res,next) =>{
         console.log('error acaaaa')
         res.send('pffff');
     }
-  
+
 };
 
 
 
-router.get('/',primeraFuncion,getEvents,(req,res) =>{
+router.get('/', primeraFuncion, getEvents(hola), (req, res) => {
     console.log(req.events);
     res.send(req.events);
 });
