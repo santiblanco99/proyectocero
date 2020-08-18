@@ -26,8 +26,6 @@ const testRoutes = require('./routes/testRoutes');
 app.use('/api',authRoutes);
 app.use('/api',eventRoutes);
 
-app.use('/test',testRoutes);
-
 
 app.use('/',userRoutes);
 
