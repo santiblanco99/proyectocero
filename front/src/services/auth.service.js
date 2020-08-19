@@ -28,19 +28,24 @@ class AuthService {
 
     register = async (username, first_name, last_name, email, password) => {
 
-        return await axios.post(API_URL + 'create-user', {
+        const resp =  await axios.post(API_URL + 'create-user', {
             username,
             first_name,
             last_name,
             email,
             password
-        })
+        });
+
+        if(resp.data){
+            localStorage.setItem('token', resp.data.token);
+            localStorage.setItem('user',JSON.stringify(resp.data.user));
+        }
 
 
     };
 
     getCurrentUser = () => {
-
+    
         var user = localStorage.getItem('user');
         console.log(user);
         if(user){

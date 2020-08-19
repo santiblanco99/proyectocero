@@ -31,11 +31,11 @@ class App extends React.Component {
         <div>
           <nav className="navbar navbar-expand navbar-dark bg-dark">
             <Link to={"/"} className="navbar-brand">
-              bezKoder
+              Cloud Events
             </Link>
             <div className="navbar-nav mr-auto">
               <li className="nav-item">
-                <Link to={"/home"} className="nav-link">
+                <Link to={"/events"} className="nav-link">
                   Home
                 </Link>
               </li>
@@ -67,7 +67,7 @@ class App extends React.Component {
           </nav>
           <div className="container mt-3">
             <Switch>
-              <Route exact path={["/", "/home"]} component={Home} />
+              <Route exact path={["/", "/events"]} component={Home} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
             </Switch>

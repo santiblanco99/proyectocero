@@ -24,7 +24,10 @@ router.post('/create-user', async (req, res) => {
             expiresIn: 86400,
         });
         res.header('authorization',token);
-        return res.status(200).json(newUser);
+        return res.status(200).send({
+            token: token,
+            user: newUser
+        });
 
     } catch (error) {
         console.log(error);

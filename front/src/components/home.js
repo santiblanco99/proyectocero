@@ -1,5 +1,7 @@
 import React from 'react';
+import {Redirect} from 'react-router-dom';
 import eventsService from '../services/events.service';
+import authService from '../services/auth.service';
 
 class Home extends React.Component {
     state = { events: [] };
@@ -26,14 +28,29 @@ class Home extends React.Component {
 
     }
     componentDidMount() {
-        this.getEvents();
+        const user = authService.getCurrentUser();
+        if(user){
+            this.getEvents();
+        }
+        
     }
     render(){
+        const user = authService.getCurrentUser();
+        if(user){
+            return (
+
+                <div className='container'>
+                    {this.state.events}
+                </div>
+            );
+        }
         return (
-            <div className='container'>
-                {this.state.events}
-            </div>
+            <Redirect to={{
+                pathname:'/login',
+                
+            }}/>
         );
+        
     }
 }
 
