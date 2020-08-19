@@ -27,7 +27,7 @@ app.use('/api',authRoutes);
 app.use('/api',eventRoutes);
 
 
-app.use('/',userRoutes);
+app.use('/api/user',userRoutes);
 
 app.use('/events',eventRoutes);
 

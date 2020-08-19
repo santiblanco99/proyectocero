@@ -3,13 +3,9 @@ const Pool = require('pg').Pool
 const pool = new Pool();
 
 const getUserById = async (id) => {
-    try {
-        var res = await pool.query('SELECT * FROM USERS WHERE email = $1', [id]);
-        
-        return res.rows[0];
-    } catch (error) {
-        console.log(error);
-    }
+    var res = await pool.query('SELECT * FROM USERS WHERE email = $1', [id]);
+
+    return res.rows[0];
 
 };
 

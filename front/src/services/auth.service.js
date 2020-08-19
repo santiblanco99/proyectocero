@@ -12,6 +12,7 @@ class AuthService {
             email,
             password
         });
+        console.log(resp.data);
         if (resp.data && resp.data.token) {
             localStorage.setItem('token', resp.data.token);
             localStorage.setItem('user',JSON.stringify(resp.data.user));
@@ -39,10 +40,13 @@ class AuthService {
     };
 
     getCurrentUser = () => {
-        
+
         var user = localStorage.getItem('user');
         console.log(user);
-        return JSON.parse(user);
+        if(user){
+            return JSON.parse(user);
+        }
+        
     }
 
 
