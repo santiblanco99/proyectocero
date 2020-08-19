@@ -1,27 +1,48 @@
 import axios from 'axios';
 
 
-const API_URL = "http://172.24.98.84:3000/api/";
+const API_URL = "http://172.24.98.84:5000/api/";
 
 class AuthService {
 
-    login = (username,password) => {
-        return axios.post(API_URL+'login',{
-            username,
+    login = async (email, password) => {
+
+
+        const resp = await axios.post(API_URL + 'login', {
+            email,
             password
-        }).then(response => {
-            console.log(response);
         });
+        if (resp.data && resp.data.token) {
+            localStorage.setItem('token', resp.data.token);
+            localStorage.setItem('user',JSON.stringify(resp.data.user));
+            return resp.data.token;
+        }
+        return resp.data;
     }
 
-    getEvents = () => {
-        return axios.get(API_URL+'events',{
-            headers: {
-                Authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InNhbnRpQGV4YW1wbGUuY29tIiwiaWF0IjoxNTk3Nzg1MTkzLCJleHAiOjE1OTc4NzE1OTN9.tlzepscA8pLee-4g-QfYsUca3y-v9baYyBg5M0BADIg'
-            }
-        }).then(resp => {
-            return resp;
-        });
+    logout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+    };
+
+    register = async (username, first_name, last_name, email, password) => {
+
+        return await axios.post(API_URL + 'create-user', {
+            username,
+            first_name,
+            last_name,
+            email,
+            password
+        })
+
+
+    };
+
+    getCurrentUser = () => {
+        
+        var user = localStorage.getItem('user');
+        console.log(user);
+        return JSON.parse(user);
     }
 
 

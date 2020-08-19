@@ -1,28 +1,88 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+
+
 import authService from './services/auth.service';
+import eventsService from './services/events.service';
+
+import Login from './components/login';
+import Home from './components/home';
+import Register from './components/register';
 
 
+class App extends React.Component {
 
-const App = () => {
-    const [term, setTerm] = useState('hola');
+    state = {currentUser: null}
 
-    useEffect(() => {
-        const search = async () => {
-            var resp = await authService.getEvents();
-            console.log('hola');
-            console.log(resp);
-            setTerm(resp);
-        };
-        search();
-        
-    },[]);
+    componentDidMount() {
+        const user = authService.getCurrentUser();
+        console.log(user);
+        this.setState({currentUser:user});
+    }
 
-    return (
+    logout = () => {
+        authService.logout();
+    }
+
+    render() {
+        return (
+            <Router>
         <div>
-           {term}
-        </div>
-    );
+          <nav className="navbar navbar-expand navbar-dark bg-dark">
+            <Link to={"/"} className="navbar-brand">
+              bezKoder
+            </Link>
+            <div className="navbar-nav mr-auto">
+              <li className="nav-item">
+                <Link to={"/home"} className="nav-link">
+                  Home
+                </Link>
+              </li>
+            </div>
+
+            {this.state.currentUser ? (
+              <div className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <a href="/login" className="nav-link" onClick={this.logout}>
+                    LogOut
+                  </a>
+                </li>
+              </div>
+            ) : (
+              <div className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <Link to={"/login"} className="nav-link">
+                    Login
+                  </Link>
+                </li>
+
+                <li className="nav-item">
+                  <Link to={"/register"} className="nav-link">
+                    Sign Up
+                  </Link>
+                </li>
+              </div>
+            )}
+          </nav>
+          <div className="container mt-3">
+            <Switch>
+              <Route exact path={["/", "/home"]} component={Home} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/register" component={Register} />
+            </Switch>
+          </div>
+          </div>
+          </Router>
+        );
+    }
+
+
 }
+
+
+
+
+
 
 export default App;
