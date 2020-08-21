@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React  from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 
 import authService from './services/auth.service';
-import eventsService from './services/events.service';
+
 
 import Login from './components/login';
 import Home from './components/home';
 import Register from './components/register';
+import EventDetail from './components/EventDetail';
+import EditEvent from './components/EditEvent';
+import NewEvent from './components/NewEvent';
 
 
 class App extends React.Component {
@@ -17,7 +20,6 @@ class App extends React.Component {
 
     componentDidMount() {
         const user = authService.getCurrentUser();
-        console.log(user);
         this.setState({currentUser:user});
     }
 
@@ -70,6 +72,9 @@ class App extends React.Component {
               <Route exact path={["/", "/events"]} component={Home} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
+              <Route exact path='/events/:id/show' component={EventDetail}/>
+              <Route exact path='/events/:id/edit' component={EditEvent}/>
+              <Route exact path='/events/new' component={NewEvent}/>
             </Switch>
           </div>
           </div>

@@ -54,8 +54,6 @@ class Register extends React.Component {
             const resp = await authService.register(this.state.username, this.state.name, this.state.last,
                 this.state.email, this.state.password);
             this.setState({ message: 'Sign Up Successful', successful: true });
-            this.props.history.push('/events');
-            window.location.reload();
 
         } catch (error) {
             this.setState({
