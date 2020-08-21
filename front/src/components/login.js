@@ -39,7 +39,7 @@ class Login extends React.Component {
         } catch (e) {
             console.log('fsdfjhjsfhjksd');
             console.log(e);
-            this.setState({ message: e.toString(), loading: false })
+            this.setState({ message: 'Login failed. Try again', loading: false })
         }
 
     }
