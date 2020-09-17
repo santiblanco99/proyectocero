@@ -3,7 +3,7 @@ import authHeader from './auth-header';
 
 
 
-const API_URL = "http://localhost:5000/api/";
+const API_URL = "http://54.190.5.79:5000/api/";
 
 class EventsService {
     getUserEvents = async () => {
